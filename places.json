@@ -1,0 +1,62 @@
+[
+	{
+		"id": 1,
+		"img": "resources/belo-horizonte.jpg",
+		"city": "Belo Horizonte",
+		"state": "Minas Gerais"
+	},
+	{
+		"id": 2,
+		"img": "resources/brasilia.jpeg",
+		"city": "Brasília",
+		"state": "Distrito Federal"
+	},
+	{
+		"id": 3,
+		"img": "resources/cascavel.jpg",
+		"city": "Cascavel",
+		"state": "Paraná"
+	},
+	{
+		"id": 4,
+		"img": "resources/fernando-de-noronha.webp",
+		"city": "Fernando de Noronha",
+		"state": "Pernambuco"
+	},
+	{
+		"id": 5,
+		"img": "resources/florianopolis.webp",
+		"city": "Florianópolis",
+		"state": "Santa Catarina"
+	},
+	{
+		"id": 6,
+		"img": "resources/manaus.webp",
+		"city": "Manaus",
+		"state": "Amazonas"
+	},
+	{
+		"id": 7,
+		"img": "resources/maragogi.jpg",
+		"city": "Maragogi",
+		"state": "Alagoas"
+	},
+	{
+		"id": 8,
+		"img": "resources/pipa.jpeg",
+		"city": "Pipa",
+		"state": "Rio Grande do Norte"
+	},
+	{
+		"id": 9,
+		"img": "resources/recife.webp",
+		"city": "Recife",
+		"state": "Pernambuco"
+	},
+	{
+		"id": 10,
+		"img": "resources/rio-de-janeiro.webp",
+		"city": "Rio de Janeiro",
+		"state": "Rio de Janeiro"
+	}
+]

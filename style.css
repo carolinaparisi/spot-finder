@@ -46,16 +46,42 @@ header {
 }
 
 .button {
-	border-style: none;
+	border: 4px solid black;
 	cursor: pointer;
-	background-color: rgb(233, 156, 114);
+	background-color: rgb(225, 122, 66);
 	border-radius: 100%;
-	height: 3rem;
-	width: 3rem;
+	height: 4rem;
+	width: 4rem;
+	font-size: 2rem;
 }
 
 main {
 	text-align: center;
 	padding: 4rem;
 	font-size: 2rem;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	gap: 6rem;
+}
+
+.image {
+	width: 25rem;
+	height: 20rem;
+	display: flex;
+	align-items: center;
+}
+
+.card {
+	background-color: rgb(233, 156, 114);
+	box-shadow: 1px 1px 20px 6px rgba(6, 3, 2, 0.5);
+	border-radius: 8px;
+}
+
+.city-name {
+	font-weight: bold;
+}
+
+.city-state {
+	padding: 0.5rem;
 }

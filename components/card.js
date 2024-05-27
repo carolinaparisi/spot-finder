@@ -3,12 +3,15 @@ export default function Card(city, src, state) {
 	card.setAttribute("class", "card");
 
 	const cityDiv = document.createElement("div");
+	cityDiv.setAttribute("class", "city-name city-state");
 	cityDiv.innerHTML = `${city}`;
 
 	const imgDiv = document.createElement("img");
+	imgDiv.setAttribute("class", "image");
 	imgDiv.setAttribute("src", `${src}`);
 
 	const stateDiv = document.createElement("div");
+	stateDiv.setAttribute("class", "city-state");
 	stateDiv.innerHTML = `${state}`;
 
 	card.appendChild(cityDiv);

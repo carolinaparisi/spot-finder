@@ -1,4 +1,4 @@
-export default function search() {
+export default function Search() {
 	const form = document.createElement("form");
 	form.setAttribute("class", "form");
 

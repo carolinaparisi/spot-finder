@@ -53,6 +53,16 @@ async function init() {
 
 		updateMainDiv(fetchData, page, itemsPerPage);
 	});
+
+	//handle enter key to filter the city or country
+	const form = document.querySelector(".form")[0];
+	form.addEventListener("keydown", (event) => {
+		if (event.key === "Enter") {
+			const filteredLocations = handleForm(event, fetchData);
+			console.log(filteredLocations);
+			updateMainDiv(filteredLocations, page, itemsPerPage);
+		}
+	});
 }
 
 function render(components) {
@@ -82,7 +92,28 @@ function setCurrentPage(page) {
 }
 
 function updateMainDiv(fetchData, page, itemsPerPage) {
+	//TODO: remove pagination component and implement correct number of pages correctly
 	document.querySelector("main").remove();
 	const data = getPageComponents(fetchData, page, itemsPerPage);
 	render([CardList(data)]);
+}
+
+function handleForm(event, fetchData) {
+	event.preventDefault();
+
+	const searchInput = document.querySelector("#search-input");
+	const arrayLocations = Object.values(fetchData);
+	const inputValue = searchInput.value.toLowerCase();
+
+	const filteredLocations = arrayLocations.filter((location) => {
+		return (
+			location.city.toLowerCase().includes(inputValue) ||
+			location.state.toLowerCase().includes(inputValue)
+		);
+	});
+
+	//clear the input for others searches
+	searchInput.value = "";
+
+	return filteredLocations;
 }

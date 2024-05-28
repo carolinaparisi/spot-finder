@@ -11,19 +11,19 @@ window.addEventListener("DOMContentLoaded", () => {
 async function init() {
 	let page = 1;
 	const itemsPerPage = 3;
-
 	const fetchData = await fetchAllData();
+	const maxPages = Math.ceil(fetchData.length / itemsPerPage);
 
 	const data = getPageComponents(fetchData, page, itemsPerPage);
 	console.log(data);
 
-	render([Title(), Search(), Pagination(page), CardList(data)]);
+	render([Title(), Search(), Pagination(page, maxPages), CardList(data)]);
 
 	const nextBtn = document.querySelector("#next-btn");
 	const previousBtn = document.querySelector("#previous-btn");
 
 	nextBtn.addEventListener("click", () => {
-		if (page === Math.floor(fetchData.length / itemsPerPage)) {
+		if (page === maxPages - 1) {
 			nextBtn.setAttribute("disabled", "");
 			nextBtn.setAttribute("class", "disabled");
 		}
@@ -60,6 +60,7 @@ async function init() {
 		if (event.key === "Enter") {
 			const filteredLocations = handleForm(event, fetchData);
 			console.log(filteredLocations);
+			updatePaginationDiv(filteredLocations, page, itemsPerPage);
 			updateMainDiv(filteredLocations, page, itemsPerPage);
 		}
 	});
@@ -88,7 +89,7 @@ async function fetchAllData() {
 function setCurrentPage(page) {
 	const paginationSection = document.querySelector(".pagination-section");
 	const numberPages = paginationSection.querySelectorAll(".number-pages")[0];
-	numberPages.innerText = `${page} of 4`;
+	numberPages.innerText = `Page ${page}`;
 }
 
 function updateMainDiv(fetchData, page, itemsPerPage) {
@@ -96,6 +97,13 @@ function updateMainDiv(fetchData, page, itemsPerPage) {
 	document.querySelector("main").remove();
 	const data = getPageComponents(fetchData, page, itemsPerPage);
 	render([CardList(data)]);
+}
+
+function updatePaginationDiv(filteredLocations, page, itemsPerPage) {
+	const maxPages = Math.ceil(filteredLocations.length / itemsPerPage);
+	document.querySelector(".pagination-section").remove();
+	console.log(maxPages);
+	render([Pagination(page, maxPages)]);
 }
 
 function handleForm(event, fetchData) {

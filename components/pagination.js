@@ -1,4 +1,4 @@
-export default function Pagination(page) {
+export default function Pagination(page, maxPages) {
 	const pagination = document.createElement("section");
 	pagination.setAttribute("class", "pagination-section");
 
@@ -9,7 +9,7 @@ export default function Pagination(page) {
 
 	const pages = document.createElement("div");
 	pages.setAttribute("class", "number-pages");
-	pages.innerText = `${page} of 4`;
+	pages.innerText = `Page ${page}`;
 
 	const nextBtn = document.createElement("button");
 	nextBtn.setAttribute("class", "button");
@@ -22,6 +22,11 @@ export default function Pagination(page) {
 
 	previousBtn.setAttribute("disabled", "");
 	previousBtn.setAttribute("class", "disabled");
+
+	if (page === maxPages) {
+		nextBtn.setAttribute("disabled", "");
+		nextBtn.setAttribute("class", "disabled");
+	}
 
 	return pagination;
 }

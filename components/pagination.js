@@ -20,5 +20,7 @@ export default function Pagination() {
 	pagination.appendChild(pages);
 	pagination.appendChild(nextBtn);
 
+	previousBtn.setAttribute("disabled", "");
+
 	return pagination;
 }

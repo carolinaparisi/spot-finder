@@ -60,15 +60,9 @@ main {
 	padding: 4rem;
 	font-size: 2rem;
 	display: flex;
-	flex-direction: column;
 	justify-content: space-around;
 	flex-wrap: wrap;
 	gap: 6rem;
-}
-
-.cards-div {
-	display: flex;
-	justify-content: space-around;
 }
 
 .image {

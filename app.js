@@ -17,7 +17,7 @@ async function init() {
 	const data = getPageComponents(fetchData, page, itemsPerPage);
 	console.log(data);
 
-	render([Title(), Search(), Pagination(), CardList(data)]);
+	render([Title(), Search(), Pagination(page), CardList(data)]);
 
 	const nextBtn = document.querySelector("#next-btn");
 	const previousBtn = document.querySelector("#previous-btn");
@@ -25,27 +25,33 @@ async function init() {
 	nextBtn.addEventListener("click", () => {
 		if (page === Math.floor(fetchData.length / itemsPerPage)) {
 			nextBtn.setAttribute("disabled", "");
-			console.log("btn disabled");
+			nextBtn.setAttribute("class", "disabled");
 		}
 
 		previousBtn.removeAttribute("disabled");
+		previousBtn.classList.remove("disabled");
+		previousBtn.classList.add("button");
+
 		page++;
-		document.querySelector("main").remove();
-		const data = getPageComponents(fetchData, page, itemsPerPage);
-		render([CardList(data)]);
+		setCurrentPage(page);
+
+		updateMainDiv(fetchData, page, itemsPerPage);
 	});
 
 	previousBtn.addEventListener("click", () => {
 		page--;
+		setCurrentPage(page);
+
 		if (page === 1) {
 			previousBtn.setAttribute("disabled", "");
-			console.log("btn disabled");
+			previousBtn.setAttribute("class", "disabled");
 		}
 
 		nextBtn.removeAttribute("disabled");
-		document.querySelector("main").remove();
-		const data = getPageComponents(fetchData, page, itemsPerPage);
-		render([CardList(data)]);
+		nextBtn.classList.remove("disabled");
+		nextBtn.classList.add("button");
+
+		updateMainDiv(fetchData, page, itemsPerPage);
 	});
 }
 
@@ -67,4 +73,16 @@ function getPageComponents(data, page, itemsPerPage) {
 async function fetchAllData() {
 	const locations = await fetchJson();
 	return locations;
+}
+
+function setCurrentPage(page) {
+	const paginationSection = document.querySelector(".pagination-section");
+	const numberPages = paginationSection.querySelectorAll(".number-pages")[0];
+	numberPages.innerText = `${page} of 4`;
+}
+
+function updateMainDiv(fetchData, page, itemsPerPage) {
+	document.querySelector("main").remove();
+	const data = getPageComponents(fetchData, page, itemsPerPage);
+	render([CardList(data)]);
 }

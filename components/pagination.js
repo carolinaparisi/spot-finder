@@ -1,4 +1,4 @@
-export default function Pagination() {
+export default function Pagination(page) {
 	const pagination = document.createElement("section");
 	pagination.setAttribute("class", "pagination-section");
 
@@ -9,7 +9,7 @@ export default function Pagination() {
 
 	const pages = document.createElement("div");
 	pages.setAttribute("class", "number-pages");
-	pages.innerText = "1 a 4";
+	pages.innerText = `${page} of 4`;
 
 	const nextBtn = document.createElement("button");
 	nextBtn.setAttribute("class", "button");
@@ -21,6 +21,7 @@ export default function Pagination() {
 	pagination.appendChild(nextBtn);
 
 	previousBtn.setAttribute("disabled", "");
+	previousBtn.setAttribute("class", "disabled");
 
 	return pagination;
 }

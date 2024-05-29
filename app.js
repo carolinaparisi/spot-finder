@@ -26,9 +26,8 @@ async function init() {
 	form.addEventListener("keydown", (event) => {
 		if (event.key === "Enter") {
 			const filteredLocations = handleForm(event, fetchData);
-			console.log(filteredLocations);
 			updatePaginationDiv(filteredLocations, page, itemsPerPage);
-			updateMainDiv(filteredLocations, page, itemsPerPage);
+			updateMainDiv(filteredLocations, page, itemsPerPage, messageNotFound);
 		}
 	});
 }

@@ -19,6 +19,21 @@ async function init() {
 
 	render([Title(), Search(), Pagination(page, maxPages), CardList(data)]);
 
+	addButtonsEventListener(page, maxPages, fetchData, itemsPerPage);
+
+	//handle enter key to filter the city or country
+	const form = document.querySelector(".form")[0];
+	form.addEventListener("keydown", (event) => {
+		if (event.key === "Enter") {
+			const filteredLocations = handleForm(event, fetchData);
+			console.log(filteredLocations);
+			updatePaginationDiv(filteredLocations, page, itemsPerPage);
+			updateMainDiv(filteredLocations, page, itemsPerPage);
+		}
+	});
+}
+
+function addButtonsEventListener(page, maxPages, fetchData, itemsPerPage) {
 	const nextBtn = document.querySelector("#next-btn");
 	const previousBtn = document.querySelector("#previous-btn");
 
@@ -52,17 +67,6 @@ async function init() {
 		nextBtn.classList.add("button");
 
 		updateMainDiv(fetchData, page, itemsPerPage);
-	});
-
-	//handle enter key to filter the city or country
-	const form = document.querySelector(".form")[0];
-	form.addEventListener("keydown", (event) => {
-		if (event.key === "Enter") {
-			const filteredLocations = handleForm(event, fetchData);
-			console.log(filteredLocations);
-			updatePaginationDiv(filteredLocations, page, itemsPerPage);
-			updateMainDiv(filteredLocations, page, itemsPerPage);
-		}
 	});
 }
 
@@ -104,6 +108,7 @@ function updatePaginationDiv(filteredLocations, page, itemsPerPage) {
 	document.querySelector(".pagination-section").remove();
 	console.log(maxPages);
 	render([Pagination(page, maxPages)]);
+	addButtonsEventListener(page, maxPages, filteredLocations, itemsPerPage);
 }
 
 function handleForm(event, fetchData) {

@@ -13,9 +13,9 @@ async function init() {
 	const itemsPerPage = 3;
 	const fetchData = await fetchAllData();
 	const maxPages = Math.ceil(fetchData.length / itemsPerPage);
+	const messageNotFound = "Sorry, no City or State were found here :(";
 
 	const data = getPageComponents(fetchData, page, itemsPerPage);
-	console.log(data);
 
 	render([Title(), Search(), Pagination(page, maxPages), CardList(data)]);
 
@@ -36,6 +36,7 @@ async function init() {
 function addButtonsEventListener(page, maxPages, fetchData, itemsPerPage) {
 	const nextBtn = document.querySelector("#next-btn");
 	const previousBtn = document.querySelector("#previous-btn");
+	const messageNotFound = "";
 
 	nextBtn.addEventListener("click", () => {
 		if (page === maxPages - 1) {
@@ -50,7 +51,7 @@ function addButtonsEventListener(page, maxPages, fetchData, itemsPerPage) {
 		page++;
 		setCurrentPage(page);
 
-		updateMainDiv(fetchData, page, itemsPerPage);
+		updateMainDiv(fetchData, page, itemsPerPage, messageNotFound);
 	});
 
 	previousBtn.addEventListener("click", () => {
@@ -81,7 +82,6 @@ function render(components) {
 function getPageComponents(data, page, itemsPerPage) {
 	let from = (page - 1) * itemsPerPage;
 	let to = page * itemsPerPage;
-	console.log(page, from, to);
 	return data.slice(from, to);
 }
 
@@ -96,17 +96,35 @@ function setCurrentPage(page) {
 	numberPages.innerText = `Page ${page}`;
 }
 
-function updateMainDiv(fetchData, page, itemsPerPage) {
-	//TODO: remove pagination component and implement correct number of pages correctly
+function updateMainDiv(fetchData, page, itemsPerPage, messageNotFound) {
+	const mainPage = document.getElementsByTagName("body")[0];
+
+	//Dom manipulation in case of there's no location to render
+	if (fetchData.length === 0) {
+		document.querySelector("main").remove();
+		const mainDiv = document.createElement("main");
+		mainDiv.innerText = messageNotFound;
+
+		mainPage.appendChild(mainDiv);
+
+		return;
+	}
+
 	document.querySelector("main").remove();
 	const data = getPageComponents(fetchData, page, itemsPerPage);
 	render([CardList(data)]);
 }
 
 function updatePaginationDiv(filteredLocations, page, itemsPerPage) {
-	const maxPages = Math.ceil(filteredLocations.length / itemsPerPage);
+	let maxPages = 0;
+	maxPages = Math.ceil(filteredLocations.length / itemsPerPage);
+
+	//Need to have at list one page to have the correct functionality at the buttons
+	if (maxPages === 0) {
+		maxPages = 1;
+	}
+
 	document.querySelector(".pagination-section").remove();
-	console.log(maxPages);
 	render([Pagination(page, maxPages)]);
 	addButtonsEventListener(page, maxPages, filteredLocations, itemsPerPage);
 }
@@ -119,6 +137,16 @@ function handleForm(event, fetchData) {
 	const inputValue = searchInput.value.toLowerCase();
 
 	const filteredLocations = arrayLocations.filter((location) => {
+		if (
+			!(
+				location.city.toLowerCase().includes(inputValue) ||
+				location.state.toLowerCase().includes(inputValue)
+			)
+		) {
+			searchInput.value = "";
+			return;
+		}
+
 		return (
 			location.city.toLowerCase().includes(inputValue) ||
 			location.state.toLowerCase().includes(inputValue)
